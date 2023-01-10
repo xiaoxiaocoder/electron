@@ -182,7 +182,7 @@
 #endif
 
 #if BUILDFLAG(IS_MAC)
-#include "content/common/mac_helpers.h"
+#include "content/browser/mac_helpers.h"
 #include "content/public/browser/child_process_host.h"
 #endif
 
