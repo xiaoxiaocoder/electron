@@ -2202,7 +2202,8 @@ workflows:
         - equal: [false, << pipeline.parameters.run-linux-publish >>]
         - equal: [true, << pipeline.parameters.run-build-linux >>]
     jobs:
-      - linux-make-src-cache
+      - linux-make-src-cache:
+          context: electron-core-ci
       - linux-x64-testing:
           requires:
             - linux-make-src-cache
@@ -2258,7 +2259,8 @@ workflows:
         - equal: [false, << pipeline.parameters.run-linux-publish >>]
         - equal: [true, << pipeline.parameters.run-build-mac >>]
     jobs:
-      - mac-make-src-cache
+      - mac-make-src-cache:
+          context: electron-core-ci
       - osx-testing-x64:
           requires:
             - mac-make-src-cache
