@@ -58,23 +58,29 @@ class FileChooserDialog {
       : parent_(
             static_cast<electron::NativeWindowViews*>(settings.parent_window)),
         filters_(settings.filters) {
-    auto label = settings.button_label;
+    auto ok_label = settings.ok_button_label;
+    auto cancel_label = settings.cancel_button_label;
 
     if (electron::IsElectron_gtkInitialized()) {
       dialog_ = GTK_FILE_CHOOSER(gtk_file_chooser_native_new(
           settings.title.c_str(), NULL, action,
-          label.empty() ? nullptr : label.c_str(), nullptr));
+          ok_label.empty() ? nullptr : ok_label.c_str(),
+          cancel_label.empty() ? nullptr : cancel_label.c_str()));
     } else {
       const char* confirm_text = gtk_util::GetOkLabel();
-      if (!label.empty())
+      if (!ok_label.empty())
         confirm_text = label.c_str();
       else if (action == GTK_FILE_CHOOSER_ACTION_SAVE)
         confirm_text = gtk_util::GetSaveLabel();
       else if (action == GTK_FILE_CHOOSER_ACTION_OPEN)
         confirm_text = gtk_util::GetOpenLabel();
 
+      const char* cancel_text = cancel_label.empty()
+                                    ? gtk_util::GetCancelLabel()
+                                    : cancel_label.c_str();
+
       dialog_ = GTK_FILE_CHOOSER(gtk_file_chooser_dialog_new(
-          settings.title.c_str(), NULL, action, gtk_util::GetCancelLabel(),
+          settings.title.c_str(), NULL, action, cancel_text,
           GTK_RESPONSE_CANCEL, confirm_text, GTK_RESPONSE_ACCEPT, NULL));
     }
 
