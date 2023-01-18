@@ -174,6 +174,20 @@ for:
           }
       - python3 electron/script/zip_manifests/check-zip-manifest.py out/Default/dist.zip electron/script/zip_manifests/dist_zip.win.%TARGET_ARCH%.manifest
 
+    after_build:
+      - cd C:\projects\src
+      - ps: |
+          $artifacts_to_upload = @('windows_toolchain_profile.json','dist.zip','shell_browser_ui_unittests.exe','chromedriver.zip','ffmpeg.zip','node_headers.zip','mksnapshot.zip','hunspell_dictionaries.zip','electron.lib')
+          foreach($artifact_name in $artifacts_to_upload) {
+            if (Test-Path "out\Default\$artifact_name") {
+              appveyor-retry appveyor PushArtifact "out\Default\$artifact_name"
+            }
+          }
+      - ps: >-
+          if ((Test-Path "pdb.zip") -And ($env:GN_CONFIG -ne 'release')) {
+            appveyor-retry appveyor PushArtifact pdb.zip
+          }
+
     deploy_script:
       - cd electron
       - ps: >-
@@ -186,23 +200,11 @@ for:
               & python3 script\release\uploaders\upload.py --verbose
             }
           }
+    on_failure:
+      - ps: Get-EventLog AppVeyor -newest 10 | Format-List
     on_finish:
       # Uncomment this lines to enable RDP
       # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-      - cd C:\projects\src
-      - if exist out\Default\windows_toolchain_profile.json ( appveyor-retry appveyor PushArtifact out\Default\windows_toolchain_profile.json )
-      - if exist out\Default\dist.zip (appveyor-retry appveyor PushArtifact out\Default\dist.zip)
-      - if exist out\Default\shell_browser_ui_unittests.exe (appveyor-retry appveyor PushArtifact out\Default\shell_browser_ui_unittests.exe)
-      - if exist out\Default\chromedriver.zip (appveyor-retry appveyor PushArtifact out\Default\chromedriver.zip)
-      - if exist out\ffmpeg\ffmpeg.zip (appveyor-retry appveyor PushArtifact out\ffmpeg\ffmpeg.zip)
-      - if exist node_headers.zip (appveyor-retry appveyor PushArtifact node_headers.zip)
-      - if exist out\Default\mksnapshot.zip (appveyor-retry appveyor PushArtifact out\Default\mksnapshot.zip)
-      - if exist out\Default\hunspell_dictionaries.zip (appveyor-retry appveyor PushArtifact out\Default\hunspell_dictionaries.zip)
-      - if exist out\Default\electron.lib (appveyor-retry appveyor PushArtifact out\Default\electron.lib)
-      - ps: >-
-          if ((Test-Path "pdb.zip") -And ($env:GN_CONFIG -ne 'release')) {
-            appveyor-retry appveyor PushArtifact pdb.zip
-          }
   - matrix:
       only:
         - job_name: Test On Windows On Arm Hardware
