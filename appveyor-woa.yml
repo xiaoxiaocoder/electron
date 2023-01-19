@@ -61,6 +61,8 @@ for:
       only:
         - job_name: Build Arm on X64 Windows
 
+    init:
+        - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     build_script:
       - ps: |
           node script/yarn.js install --frozen-lockfile
@@ -204,7 +206,7 @@ for:
       - ps: Get-EventLog AppVeyor -newest 10 | Format-List
     on_finish:
       # Uncomment this lines to enable RDP
-      # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+      - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - matrix:
       only:
         - job_name: Test On Windows On Arm Hardware
