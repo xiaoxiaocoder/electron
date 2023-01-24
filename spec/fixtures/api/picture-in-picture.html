@@ -9,10 +9,16 @@
 
     <script>
       const togglePIP = async () => {
-        if (video !== document.pictureInPictureElement)
+        console.log('In togglePip')
+        if (video !== document.pictureInPictureElement) {
+          console.log('In togglePip await video.requestPictureInPicture')
           await video.requestPictureInPicture()
-        else
+          console.log('In togglePip done await video.requestPictureInPicture')
+        } else {
+          console.log('In togglePip await document.exitPictureInPicture')
           await document.exitPictureInPicture()
+          console.log('In togglePip done await document.exitPictureInPicture')
+        }
       }
 
       window.runTest = (shouldBeEnabled) => new Promise(async (resolve, reject) => {
