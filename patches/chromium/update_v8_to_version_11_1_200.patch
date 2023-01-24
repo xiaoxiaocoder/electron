@@ -30,7 +30,7 @@ Commit-Queue: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accou
 Cr-Commit-Position: refs/heads/main@{#1093280}
 
 diff --git a/DEPS b/DEPS
-index 5c0b3c7e63dd6f57a7bf1accc43ac2b7ab84243a..6b148ca357b32ad69a92f97b7b9bcc83476ae6a7 100644
+index 5c0b3c7e63dd6f57a7bf1accc43ac2b7ab84243a..c77646d56866e1fb53406eb1c51c9dafb15f30ca 100644
 --- a/DEPS
 +++ b/DEPS
 @@ -308,7 +308,7 @@ vars = {
@@ -38,7 +38,7 @@ index 5c0b3c7e63dd6f57a7bf1accc43ac2b7ab84243a..6b148ca357b32ad69a92f97b7b9bcc83
    # the commit queue can handle CLs rolling V8
    # and whatever else without interference from each other.
 -  'v8_revision': 'cb5724ecc09929b9c248b035481130dc30ccc7a4',
-+  'v8_revision': '66d10810dc149686026a90bae9ff1f8089031e32',
++  'v8_revision': '8036123f86227ccd25983c71af816b3ea844eed4',
    # Three lines of non-changing comments so that
    # the commit queue can handle CLs rolling ANGLE
    # and whatever else without interference from each other.
