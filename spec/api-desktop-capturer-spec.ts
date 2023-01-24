@@ -120,7 +120,12 @@ ifdescribe(!process.arch.includes('arm') && process.platform !== 'win32')('deskt
   });
 
   it('getSources should not incorrectly duplicate window_id', async () => {
-    const w = new BrowserWindow({ show: false, width: 100, height: 100, webPreferences: { contextIsolation: false } });
+    const w = new BrowserWindow({
+      show: false,
+      width: 100,
+      height: 100,
+      webPreferences: { contextIsolation: false }
+    });
     const wShown = emittedOnce(w, 'show');
     const wFocused = emittedOnce(w, 'focus');
     w.show();
