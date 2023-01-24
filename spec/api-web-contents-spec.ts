@@ -2049,18 +2049,15 @@ describe('webContents module', () => {
   describe('PictureInPicture video', () => {
     afterEach(closeAllWindows);
     it('works as expected', async function () {
-      console.log('In PictureInPicture video');
       const w = new BrowserWindow({ show: false, webPreferences: { sandbox: true } });
       await w.loadFile(path.join(fixturesPath, 'api', 'picture-in-picture.html'));
-      console.log('In PictureInPicture video; loaded file');
+
       if (!await w.webContents.executeJavaScript('document.createElement(\'video\').canPlayType(\'video/webm; codecs="vp8.0"\')')) {
         this.skip();
       }
-      console.log('In PictureInPicture video; created video element');
 
       const result = await w.webContents.executeJavaScript(
         `runTest(${features.isPictureInPictureEnabled()})`, true);
-      console.log('In PictureInPicture video; done runing test');
       expect(result).to.be.true();
     });
   });
