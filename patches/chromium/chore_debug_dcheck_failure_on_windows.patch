@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: John Kleinschmidt <jkleinsc@electronjs.org>
+Date: Tue, 24 Jan 2023 10:33:09 -0500
+Subject: chore: debug dcheck failure on Windows
+
+figure out why https://source.chromium.org/chromium/chromium/src/+/main:sandbox/win/src/sandbox_policy_base.cc;l=155?q=sandbox_policy_base.cc&ss=chromium
+is dchecking
+
+diff --git a/sandbox/win/src/sandbox_policy_base.cc b/sandbox/win/src/sandbox_policy_base.cc
+index d1eac822b6f38964580b33a1c74e26746d94de4f..bb6fdb8b934df876b93ef4e84716423da1ed8b76 100644
+--- a/sandbox/win/src/sandbox_policy_base.cc
++++ b/sandbox/win/src/sandbox_policy_base.cc
+@@ -34,6 +34,7 @@
+ #include "sandbox/win/src/signed_policy.h"
+ #include "sandbox/win/src/target_process.h"
+ #include "sandbox/win/src/top_level_dispatcher.h"
++#include "base/debug/stack_trace.h"
+ 
+ namespace sandbox {
+ namespace {
+@@ -151,6 +152,13 @@ ConfigBase::~ConfigBase() {
+ ResultCode ConfigBase::AddRule(SubSystem subsystem,
+                                Semantics semantics,
+                                const wchar_t* pattern) {
++  if (configured_) {
++    LOG(INFO) << "IN  ConfigBase::AddRule already configured";
++    base::debug::StackTrace().Print();
++  } else {
++    LOG(INFO) << "IN  ConfigBase::AddRule !already configured";
++    base::debug::StackTrace().Print();
++  }
+   DCHECK(IsOnCreatingThread());
+   DCHECK(!configured_);
+   ResultCode result = AddRuleInternal(subsystem, semantics, pattern);
