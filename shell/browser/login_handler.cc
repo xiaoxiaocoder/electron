@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "base/functional/callback.h"
+#include "base/callback.h"
 #include "base/task/sequenced_task_runner.h"
 #include "gin/arguments.h"
 #include "gin/dictionary.h"
