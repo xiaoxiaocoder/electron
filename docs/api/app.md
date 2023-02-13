@@ -1470,6 +1470,16 @@ details.
 
 **Note:** Enable `Secure Keyboard Entry` only when it is needed and disable it when it is no longer needed.
 
+### `app.isOnline()`
+
+Returns `boolean` - Whether there is currently internet connection.
+
+A return value of `false` is a pretty strong indicator that the user
+won't be able to connect to remote sites. However, a return value of
+`true` is inconclusive; even if some link is up, it is uncertain
+whether a particular connection attempt to a particular remote site
+will be successful.
+
 ## Properties
 
 ### `app.accessibilitySupportEnabled` _macOS_ _Windows_
@@ -1567,3 +1577,13 @@ or Windows [WOW](https://en.wikipedia.org/wiki/Windows_on_Windows)).
 
 You can use this property to prompt users to download the arm64 version of
 your application when they are mistakenly running the x64 version under Rosetta or WOW.
+
+### `app.online` _Readonly_
+
+A `boolean` property. Whether there is currently internet connection.
+
+A return value of `false` is a pretty strong indicator that the user
+won't be able to connect to remote sites. However, a return value of
+`true` is inconclusive; even if some link is up, it is uncertain
+whether a particular connection attempt to a particular remote site
+will be successful.

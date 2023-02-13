@@ -9,7 +9,7 @@ export function request (options: ClientRequestConstructorOptions | string, call
 }
 
 export function fetch (input: RequestInfo, init?: RequestInit): Promise<Response> {
-  return session.defaultSession.fetch(input, init);
+  return session.defaultSession.net.fetch(input, init);
 }
 
 exports.isOnline = isOnline;

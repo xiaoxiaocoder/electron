@@ -63,9 +63,15 @@ Creates a [`ClientRequest`](./client-request.md) instance using the provided
 The `net.request` method would be used to issue both secure and insecure HTTP
 requests according to the specified protocol scheme in the `options` object.
 
+> **Note**
+> If this method is called from a [session-scoped `net`
+> instance](session.md#sesnet-readonly), then the `session` and `partition`
+> options of `ClientRequestConstructorOptions` will be ignored, and the
+> associated session will always be used.
+
 ### `net.fetch(input[, init])`
 
-* `input` string | [Request](https://nodejs.org/api/globals.html#request)
+* `input` string | [GlobalRequest](https://nodejs.org/api/globals.html#request)
 * `init` [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/fetch#options) (optional)
 
 Returns `Promise<GlobalResponse>` - see [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response).
@@ -86,9 +92,22 @@ async function example () {
 }
 ```
 
-This method will issue requests from the [default
-session](session.md#sessiondefaultsession). To send a `fetch` request from
-another session, use [ses.fetch()](session.md#sesfetchinput-init).
+> **Note**
+> This method can be called either from the global `net` module, or from a `net`
+> module on a specific `Session`. When called from the global module, it will
+> issue requests from the [default session](session.md#sessiondefaultsession). To
+> send a `fetch` request from a non-default session, use
+> [ses.net.fetch()](session.md#sesnet-readonly).
+>
+> ```js
+> const { net, session } = require('electron')
+> 
+> // Issue a request in the default session
+> net.fetch('https://...')
+> 
+> // Issue a request in a non-default session
+> session.fromPartition('my-partition').net.fetch('https://...')
+> ```
 
 See the MDN documentation for
 [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/fetch) for more
@@ -101,9 +120,12 @@ Limitations:
 * The `.type` and `.url` values of the returned `Response` object are
   incorrect.
 
-### `net.isOnline()`
+### `net.isOnline()` _Deprecated_
 
 Returns `boolean` - Whether there is currently internet connection.
+
+> **Note**
+> This method is deprecated, use `app.isOnline()` instead.
 
 A return value of `false` is a pretty strong indicator that the user
 won't be able to connect to remote sites. However, a return value of
@@ -116,6 +138,9 @@ will be successful.
 ### `net.online` _Readonly_
 
 A `boolean` property. Whether there is currently internet connection.
+
+> **Note**
+> This property is deprecated, use `app.online` instead.
 
 A return value of `false` is a pretty strong indicator that the user
 won't be able to connect to remote sites. However, a return value of

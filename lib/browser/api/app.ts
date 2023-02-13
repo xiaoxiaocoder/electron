@@ -116,3 +116,10 @@ for (const name of events) {
 // Deprecation.
 deprecate.event(app, 'gpu-process-crashed', 'child-process-gone');
 deprecate.event(app, 'renderer-process-crashed', 'render-process-gone');
+
+const { isOnline } = process._linkedBinding('electron_browser_net');
+exports.isOnline = isOnline;
+
+Object.defineProperty(exports, 'online', {
+  get: () => isOnline()
+});

@@ -12,6 +12,20 @@ This document uses the following convention to categorize breaking changes:
 * **Deprecated:** An API was marked as deprecated. The API will continue to function, but will emit a deprecation warning, and will be removed in a future release.
 * **Removed:** An API or feature was removed, and is no longer supported by Electron.
 
+## Planned Breaking API Changes (24.0)
+
+### Deprecated: `net.isOnline()` and `net.online`
+
+This property has moved to the `app` module.
+
+```js
+// Deprecated in Electron 24.0
+net.isOnline()
+
+// Replace with
+app.isOnline()
+```
+
 ## Planned Breaking API Changes (23.0)
 
 ### Removed: Windows 7 / 8 / 8.1 support
