@@ -1,7 +1,8 @@
 REM Parameters vs_buildtools.exe download link and wsdk version
 @ECHO OFF
 
-SET wsdk=10SDK.20348
+@REM SET wsdk=10SDK.20348
+SET wsdk=10SDK.22621
 
 REM Check for disk space
 Rem        543210987654321
@@ -56,7 +57,8 @@ REM Install Windows SDK
 choco install windows-sdk-10-version-2104-all
 
 REM Install nodejs python git and yarn needed dependencies
-choco install -y nodejs-lts python2 git yarn
+choco install -y --force nodejs --version=18.12.1
+choco install -y python2 git yarn
 choco install python --version 3.7.9
 call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 SET PATH=C:\Python27\;C:\Python27\Scripts;C:\Python39\;C:\Python39\Scripts;%PATH%
