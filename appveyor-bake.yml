@@ -18,18 +18,18 @@ environment:
   PYTHONIOENCODING: UTF-8
 
 # The following lines are needed when baking from a completely new image (eg MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest via image: base-windows-server2019)
-# init:
-#   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-#   - appveyor version
-#   - ps: $ErrorActionPreference = 'Stop'
-#   - ps: 'Write-Host "OS Build: $((Get-CimInstance Win32_OperatingSystem).BuildNumber)"'
+init:
+  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  - appveyor version
+  - ps: $ErrorActionPreference = 'Stop'
+  - ps: 'Write-Host "OS Build: $((Get-CimInstance Win32_OperatingSystem).BuildNumber)"'
 
-# clone_folder: '%USERPROFILE%\image-bake-scripts'
+clone_folder: '%USERPROFILE%\image-bake-scripts'
 
-# clone_script:  
-#   - ps: Invoke-WebRequest "https://github.com/appveyor/build-images/archive/1f90d94e74c8243c909a09b994e527584dfcb838.zip" -OutFile "$env:temp\scripts.zip"
-#   - ps: Expand-Archive -Path "$env:temp\scripts.zip" -DestinationPath "$env:temp\scripts" -Force
-#   - ps: Copy-Item -Path "$env:temp\scripts\build-images-1f90d94e74c8243c909a09b994e527584dfcb838\scripts\Windows\*" -Destination $env:APPVEYOR_BUILD_FOLDER -Recurse  
+clone_script:  
+  - ps: Invoke-WebRequest "https://github.com/appveyor/build-images/archive/1f90d94e74c8243c909a09b994e527584dfcb838.zip" -OutFile "$env:temp\scripts.zip"
+  - ps: Expand-Archive -Path "$env:temp\scripts.zip" -DestinationPath "$env:temp\scripts" -Force
+  - ps: Copy-Item -Path "$env:temp\scripts\build-images-1f90d94e74c8243c909a09b994e527584dfcb838\scripts\Windows\*" -Destination $env:APPVEYOR_BUILD_FOLDER -Recurse  
 
 build_script:
 # The following lines are needed when baking from a completely new image (eg MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest via image: base-windows-server2019)
