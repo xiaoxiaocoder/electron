@@ -6,7 +6,7 @@
 
 version: 1.0.{build}
 build_cloud: electronhq-16-core
-image: e-111.0.5560.0-node18
+image: base-windows-server2019
 environment:
   GIT_CACHE_PATH: C:\Users\appveyor\libcc_cache
   ELECTRON_OUT_DIR: Default
@@ -33,29 +33,29 @@ environment:
 
 build_script:
 # The following lines are needed when baking from a completely new image (eg MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest via image: base-windows-server2019)
-  # - ps: .\init_server.ps1
-  # - ps: .\extend_system_volume.ps1
+  - ps: .\init_server.ps1
+  - ps: .\extend_system_volume.ps1
 
-  # # Restart VM
-  # - ps: Start-Sleep -s 5; Restart-Computer
-  # - ps: Start-Sleep -s 5
+  # Restart VM
+  - ps: Start-Sleep -s 5; Restart-Computer
+  - ps: Start-Sleep -s 5
 
-  # - appveyor version
-  # - ps: .\install_path_utils.ps1
-  # - ps: .\install_powershell_core.ps1
-  # - ps: .\install_powershell_get.ps1
-  # - ps: .\install_7zip.ps1
-  # - ps: .\install_chocolatey.ps1
-  # - ps: .\install_webpi.ps1
-  # - ps: .\install_nuget.ps1
-  # - ps: .\install_pstools.ps1
+  - appveyor version
+  - ps: .\install_path_utils.ps1
+  - ps: .\install_powershell_core.ps1
+  - ps: .\install_powershell_get.ps1
+  - ps: .\install_7zip.ps1
+  - ps: .\install_chocolatey.ps1
+  - ps: .\install_webpi.ps1
+  - ps: .\install_nuget.ps1
+  - ps: .\install_pstools.ps1
 
-  # - ps: .\install_git.ps1
-  # - ps: .\install_git_lfs.ps1
+  - ps: .\install_git.ps1
+  - ps: .\install_git_lfs.ps1
 
-  # # Restart VM
-  # - ps: Start-Sleep -s 5; Restart-Computer
-  # - ps: Start-Sleep -s 5
+  # Restart VM
+  - ps: Start-Sleep -s 5; Restart-Computer
+  - ps: Start-Sleep -s 5
 # END LINES FOR COMPLETELY NEW IMAGE
 
   - git config --global core.longpaths true
@@ -82,19 +82,19 @@ build_script:
   - ps: Copy-Item -path .\.depshash -destination ..\.depshash
   - ps: cd ..\..
   - gclient sync --with_branch_heads --with_tags --nohooks
-  - ps: regsvr32 /s "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\DIA SDK\bin\amd64\msdia140.dll"
+  - ps: regsvr32 /s "C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll"
 
 # The following lines are needed when baking from a completely new image (eg MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest via image: base-windows-server2019)
   # # Restart VM
-  # - ps: Start-Sleep -s 5; Restart-Computer 
-  # - ps: Start-Sleep -s 5
+  - ps: Start-Sleep -s 5; Restart-Computer 
+  - ps: Start-Sleep -s 5
 
-  # - cd %USERPROFILE%\image-bake-scripts
-  # - appveyor version
-  # - ps: .\optimize_dotnet_runtime.ps1
-  # - ps: .\disable_windows_background_services.ps1
-  # - ps: .\enforce_windows_firewall.ps1
-  # - ps: .\cleanup_windows.ps1  
+  - cd %USERPROFILE%\image-bake-scripts
+  - appveyor version
+  - ps: .\optimize_dotnet_runtime.ps1
+  - ps: .\disable_windows_background_services.ps1
+  - ps: .\enforce_windows_firewall.ps1
+  - ps: .\cleanup_windows.ps1  
 # END LINES FOR COMPLETELY NEW IMAGE  
 on_image_bake:
   - ps: >-

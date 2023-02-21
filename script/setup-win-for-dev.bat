@@ -51,10 +51,10 @@ set chocolateyUseWindowsCompression='true'
 SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
 REM Install Visual Studio Toolchain
-choco install visualstudio2022buildtools --package-parameters "--quiet --wait --norestart --nocache  --installPath ""%ProgramFiles(x86)%/Microsoft Visual Studio/2019/Community"" --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.140 --add Microsoft.VisualStudio.Component.VC.ATLMFC --add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.MFC.ARM64 --add Microsoft.VisualStudio.Component.Windows%wsdk% --includeRecommended"
+choco install visualstudio2022buildtools --package-parameters "--quiet --wait --norestart --nocache  --installPath ""%ProgramFiles(x86)%/Microsoft Visual Studio/2022/Community"" --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.140 --add Microsoft.VisualStudio.Component.VC.ATLMFC --add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.MFC.ARM64 --add Microsoft.VisualStudio.Component.Windows%wsdk% --includeRecommended"
 
 REM Install Windows SDK
-choco install windows-sdk-10-version-2104-all
+choco install windows-sdk-11-version-22h2-all
 
 REM Install nodejs python git and yarn needed dependencies
 choco install -y --force nodejs --version=18.12.1
