@@ -82,7 +82,7 @@ build_script:
   - ps: Copy-Item -path .\.depshash -destination ..\.depshash
   - ps: cd ..\..
   - gclient sync --with_branch_heads --with_tags --nohooks
-  - ps: regsvr32 /s "C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll"
+  - ps: regsvr32 /s "C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll"
 
 # The following lines are needed when baking from a completely new image (eg MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest via image: base-windows-server2019)
   # # Restart VM
