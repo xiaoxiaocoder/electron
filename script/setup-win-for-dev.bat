@@ -68,4 +68,4 @@ git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git C:\de
 SET PATH=%PATH%;C:\depot_tools\
 
 REM Add symstore to PATH permanently
-setx path "%%path%%;C:\Program Files (x86)\Windows Kits\10\Debuggers\x64"
+setx path "%%path%%;C:\Program Files\Windows Kits\10\Debuggers\x64"
