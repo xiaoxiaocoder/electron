@@ -70,6 +70,7 @@ build_script:
   - update_depot_tools.bat
   # Uncomment the following line if windows deps change
   - src\electron\script\setup-win-for-dev.bat
+  - ps: set vs2022_install="C:\Program Files\Microsoft Visual Studio\2022\Community"
   - >-
       gclient config
       --name "src\electron"
