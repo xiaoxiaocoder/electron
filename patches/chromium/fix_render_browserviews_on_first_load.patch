@@ -1,0 +1,77 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Keeley Hammond <vertedinde@electronjs.org>
+Date: Wed, 22 Mar 2023 10:40:46 -0700
+Subject: fix: render BrowserViews on first load
+
+This is a working draft of debugging why BrowserViews aren't painting;
+if this has reached production, something has gone terribly wrong.
+
+Patch_Filename: wip_render_bv_fix.patch
+
+diff --git a/chrome/browser/ui/views/frame/browser_view.cc b/chrome/browser/ui/views/frame/browser_view.cc
+index f76b2490145973e19c08c98038b971796eae679f..2192a77807f8522599e3c26292efe9f74466fd13 100644
+--- a/chrome/browser/ui/views/frame/browser_view.cc
++++ b/chrome/browser/ui/views/frame/browser_view.cc
+@@ -1255,6 +1255,7 @@ void BrowserView::SetBounds(const gfx::Rect& bounds) {
+     return;
+ 
+   ExitFullscreen();
++  LOG(INFO) << "SetBounds Chromium (browser_view.ccL1258)";
+   frame_->SetBounds(bounds);
+ }
+ 
+@@ -1657,6 +1658,7 @@ ui::WindowShowState BrowserView::GetRestoredState() const {
+ }
+ 
+ gfx::Rect BrowserView::GetBounds() const {
++  LOG(INFO) << "Chromium Browser View GetBounds()...";
+   return frame_->GetWindowBoundsInScreen();
+ }
+ 
+@@ -1666,14 +1668,17 @@ gfx::Size BrowserView::GetContentsSize() const {
+ }
+ 
+ void BrowserView::SetContentsSize(const gfx::Size& size) {
++  LOG(INFO) << "Set Content Size (Chromium)...";
+   DCHECK(!GetContentsSize().IsEmpty());
+ 
+   const int width_diff = size.width() - GetContentsSize().width();
+   const int height_diff = size.height() - GetContentsSize().height();
+ 
+   // Resizing the window may be expensive, so only do it if the size is wrong.
+-  if (width_diff == 0 && height_diff == 0)
++  if (width_diff == 0 && height_diff == 0) {
++    LOG(INFO) << "There is no size diff, returning early (browser_view_L1678)";
+     return;
++  }
+ 
+   gfx::Rect bounds = GetBounds();
+   bounds.set_width(bounds.width() + width_diff);
+@@ -1685,6 +1690,7 @@ void BrowserView::SetContentsSize(const gfx::Size& size) {
+   auto display =
+       display::Screen::GetScreen()->GetDisplayNearestWindow(GetNativeWindow());
+   bounds.AdjustToFit(display.work_area());
++  LOG(INFO) << "About to SetBounds...";
+   SetBounds(bounds);
+ }
+ 
+diff --git a/ui/views/view.cc b/ui/views/view.cc
+index 09e1a00746ce3a12e0295554cf3f6222063d418a..1ebb72197629757530990f0a67b415dcd0666fc3 100644
+--- a/ui/views/view.cc
++++ b/ui/views/view.cc
+@@ -1147,6 +1147,7 @@ void View::SchedulePaint() {
+ }
+ 
+ void View::SchedulePaintInRect(const gfx::Rect& rect) {
++  LOG(INFO) << "needs_paint is true!";
+   needs_paint_ = true;
+   SchedulePaintInRectImpl(rect);
+ }
+@@ -2730,6 +2731,7 @@ void View::DragInfo::PossibleDrag(const gfx::Point& p) {
+ // Painting --------------------------------------------------------------------
+ 
+ void View::SchedulePaintInRectImpl(const gfx::Rect& rect) {
++  LOG(INFO) << "Schedule Painting Here";
+   OnDidSchedulePaint(rect);
+   if (!visible_)
+     return;

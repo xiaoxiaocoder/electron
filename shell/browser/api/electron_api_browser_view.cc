@@ -156,10 +156,12 @@ void BrowserView::SetAutoResize(AutoResizeFlags flags) {
 }
 
 void BrowserView::SetBounds(const gfx::Rect& bounds) {
+  LOG(INFO) << "Setting Bounds...";
   view_->SetBounds(bounds);
 }
 
 gfx::Rect BrowserView::GetBounds() {
+  LOG(INFO) << "Getting Bounds...";
   return view_->GetBounds();
 }
 
