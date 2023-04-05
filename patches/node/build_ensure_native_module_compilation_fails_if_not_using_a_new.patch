@@ -61,7 +61,7 @@ index 173e0bc669a2fd90e764da72e09003f4c7311fd7..6ff7527d4fe4d126bda80615ffed75f7
  
 +#ifdef ELECTRON_ENSURE_CONFIG_GYPI
 +#ifndef USING_ELECTRON_CONFIG_GYPI
-+#error "It looks like you are building this native module without using the right config.gypi.  This normally means that you need to update electron-rebuild (>=3.2.8) or node-gyp (>=8.4.0) if you're building modules directly."
++#error "It looks like you are building this native module without using the right config.gypi.  This normally means that you need to update electron-rebuild (>=3.2.8) or node-gyp (>=9.0.0) if you're building modules directly."
 +#endif
 +#endif
 +
