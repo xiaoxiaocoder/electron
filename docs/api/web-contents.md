@@ -273,6 +273,9 @@ Returns:
 
 * `details` Event<>
   * `url` string - The URL the frame is navigating to.
+  * `isSameDocument` boolean - Whether the navigation happened without changing
+    document. Examples of same document navigations are reference fragment
+    navigations, pushState/replaceState, and same page history navigation.
   * `isMainFrame` boolean - True if the navigation is taking place in a main frame.
   * `frame` WebFrameMain - The frame to be navigated.
   * `initiator` WebFrameMain (optional) - The frame which initiated the
