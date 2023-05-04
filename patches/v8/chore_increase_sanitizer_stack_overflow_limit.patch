@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Calvin Watford <cwatford@slack-corp.com>
+Date: Thu, 4 May 2023 14:26:36 -0600
+Subject: chore: increase sanitizer stack overflow limit
+
+we sporadically run into this limit in our tests and it obscures what
+test is causing it.
+
+diff --git a/src/execution/isolate.cc b/src/execution/isolate.cc
+index 74984a34d8acf4ceb376de2354fef643d4348116..c2e2992aab1cd66c2f3428788c7ac14d0d1b6ae6 100644
+--- a/src/execution/isolate.cc
++++ b/src/execution/isolate.cc
+@@ -1553,7 +1553,7 @@ Object Isolate::StackOverflow() {
+ #if defined(V8_USE_ADDRESS_SANITIZER) || defined(MEMORY_SANITIZER)
+   // Allow for a bit more overflow in sanitizer builds, because C++ frames take
+   // significantly more space there.
+-  DCHECK_GE(GetCurrentStackPosition(), stack_guard()->real_climit() - 32 * KB);
++  DCHECK_GE(GetCurrentStackPosition(), stack_guard()->real_climit() - 48 * KB);
+ #else
+   DCHECK_GE(GetCurrentStackPosition(), stack_guard()->real_climit() - 8 * KB);
+ #endif
