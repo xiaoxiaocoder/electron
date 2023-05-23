@@ -27,7 +27,7 @@ bool IsPDFViewerEnabled() {
 }
 
 bool IsRunAsNodeEnabled() {
-  return electron::fuses::IsRunAsNodeEnabled() && BUILDFLAG(ENABLE_RUN_AS_NODE);
+  return electron::fuses::IsRunAsNodeEnabled();
 }
 
 bool IsFakeLocationProviderEnabled() {
