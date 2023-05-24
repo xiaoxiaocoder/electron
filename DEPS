@@ -91,7 +91,7 @@ deps = {
     'condition': 'process_deps'
   },
   'src/third_party/squirrel.mac/vendor/Mantle': {
-    'url': 'https://github.com/Mantle/Mantle.git@78d3966b3c331292ea29ec38661b25df0a245948',
+    'url': 'https://github.com/Mantle/Mantle.git@2a8e2123a3931038179ee06105c9e6ec336b12ea',
     'condition': 'process_deps',
   }
 }
